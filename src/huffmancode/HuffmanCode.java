@@ -29,7 +29,7 @@ public class HuffmanCode extends Application {
         Image image= new Image("/Recursos/algorithm.png");
         primaryStage.getIcons().add(image);
         
-        primaryStage.setTitle("HuffmanCode");
+        primaryStage.setTitle("HuffmanCoding");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

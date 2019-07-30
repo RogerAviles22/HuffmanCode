@@ -26,11 +26,11 @@ import javafx.scene.text.FontWeight;
  */
 public class HuffmanPane {
     private BorderPane root;
-    private Button btn_ingresar;
-    private TextField txf_ingresar;
-    private Button btn_calcular;    
+    private Button btn_codificar;
+    private TextField txf_ingresar; 
     private Button btn_limpiar;
     private Label lbl_titulo;
+    private Label lbl_instruccion;
 
     public HuffmanPane() {
         root = new BorderPane();   
@@ -42,8 +42,7 @@ public class HuffmanPane {
     }
     
     private void inicializar(){
-        btn_ingresar = new Button("Insertar");
-        btn_calcular = new Button("Calcular");
+        btn_codificar = new Button("Codificar");
         btn_limpiar = new Button("Limpiar");
         txf_ingresar = new TextField();
     }
@@ -53,10 +52,12 @@ public class HuffmanPane {
         VBox vb = new VBox();
         lbl_titulo= new Label("Código de Huffman");
         lbl_titulo.setFont(Font.font("Georgia",FontWeight.BOLD,30));
+        lbl_instruccion = new Label("Ingrese texto: ");
+        lbl_instruccion.setFont(Font.font("Consolas",FontWeight.BOLD,15));
         hb.setAlignment(Pos.CENTER);
         hb.setSpacing(10);
         hb.setPadding(new Insets(15, 10, 10, 10));
-        hb.getChildren().addAll(txf_ingresar,btn_ingresar,btn_calcular,btn_limpiar);
+        hb.getChildren().addAll(lbl_instruccion,txf_ingresar,btn_codificar,btn_limpiar);
         vb.getChildren().addAll(lbl_titulo,hb);
         vb.setPadding(new Insets(15, 10, 10, 10));
         root.setTop(vb);
