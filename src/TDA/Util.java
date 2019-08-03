@@ -5,8 +5,11 @@
  */
 package TDA;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Formatter;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -18,6 +21,11 @@ import java.util.Map;
  * @author Rogencio
  */
 public class Util {
+    /**
+     * Obtener el texto del archivo pasado como parámetro
+     * @param nombreArchivo Nombre del archivo con extensión .txt a obtener sus elementos
+     * @return String con los elementos del txt
+     */
     public static String leerTexto(String nombreArchivo){
         String mensaje="";
         try(Scanner sc = new Scanner(new File("src/Recursos/"+nombreArchivo))){            
@@ -31,10 +39,9 @@ public class Util {
         return mensaje;
     }
     
-    public static Map<String,Integer> calcularFrecuencias(String texto){
-        Map<String,Integer> caracteres= new HashMap<>();
+    public static HashMap<String,Integer> calcularFrecuencias(String texto){
+        HashMap<String,Integer> caracteres= new HashMap<>();
         if(texto!=null){
-            System.out.println(texto.length());
             for(int i =0; i<texto.length(); i++){   
                 char c=texto.charAt(i);
                 String s = String.valueOf(c);
@@ -150,13 +157,52 @@ public class Util {
         return conversion;
     }
     
-    void guardarTexto (String nombreArchivo, String texto, HashMap<String,String> mapa){
-        
+    /**
+     * Crea 2 .txt y almacena un texto Convertido| Guarda el Mapa con los textos
+     * @param nombreArchivo Nombre del archivo a leer y guardar
+     * @param texto String del texto a guardar
+     * @param mapa Mapa con las frecuencias del txt leido
+     */
+    public static void guardarTexto (String nombreArchivo, String texto, HashMap<String,Integer> mapa){
+        if(nombreArchivo!=null && texto!=null && mapa!=null){
+            try(BufferedWriter out = new BufferedWriter(new FileWriter("src/Recursos/"+nombreArchivo+".txt"));
+            BufferedWriter out2 = new BufferedWriter(new FileWriter("src/Recursos/"+nombreArchivo+"_compress.txt"));){
+            out.write(texto);
+            out.newLine();
+            out.close();
+            for (Map.Entry<String,Integer> entry : mapa.entrySet()) {
+                out2.write(entry.getKey()+","+entry.getValue()+"\n");            
+            }
+            out2.close();
+            }catch(IOException e){
+                System.err.println("Error"+e);
+            }
+        }      
     }
     
-    public static void main(String[] args) {
-        /*String m = leerTexto("hola.txt");
-        System.out.println(calcularFrecuencias(m));*/
+    /**
+     * Esta función lee el mapa de códigos para cada carácter desde un archivo y lo retorna en un mapa.
+     * @param nombreArchivo Nombre del archivo, con contenido del Mapa a leer, con extension .txt
+     * @return HashMap 
+     */
+    public static HashMap<String,String> leerMapa (String nombreArchivo){
+        HashMap<String,String> mapaLeido=new HashMap<>();
+        try(Scanner sc = new Scanner(new File("src/Recursos/"+nombreArchivo))){            
+            while(sc.hasNextLine()){
+                String[] m = sc.nextLine().split(",");
+                mapaLeido.put(m[0], m[1]);
+            }
+        }catch (FileNotFoundException ex) {
+            Logger.getLogger(Util.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return mapaLeido;
+    }
+    
+    //public static void main(String[] args) {
+        /*String m = leerTexto("hola.txt");  
+        System.out.println("Texto antes de calcular Frecuencia Y convertirlo a decimal: "+m);
+        guardarTexto("hola", hexadecimalBinario(m), calcularFrecuencias(m));
+        System.out.println(leerMapa("hola_compress.txt"));*/
         //System.out.println(binarioHexaDecimal("0010010010010010011101101101101101101101100000000000000001011011011011011011011001001001001001001111111111111111111111110101010101010101010101"));
         //System.out.println(contadorCaracteres("24--", '-'));
         //System.out.println(hexadecimalBinario("9"));
@@ -167,6 +213,6 @@ public class Util {
         Formatter fmt = new Formatter();
         fmt.format("%04d",numero);
         System.out.println("El numero formateado " + fmt);*/
-    }
+    //}
     
 }
