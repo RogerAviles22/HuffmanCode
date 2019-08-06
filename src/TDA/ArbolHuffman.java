@@ -5,16 +5,17 @@
  */
 package TDA;
 
+import java.util.HashMap;
 import java.util.Objects;
 
 /**
  *
  * @author Rogencio
  */
-public class BinaryTree<E> {
+public class ArbolHuffman<E> {
     private NodeBT<E> root;
     
-    public BinaryTree(){
+    public ArbolHuffman(){
         root=null;
     }
     
@@ -22,6 +23,26 @@ public class BinaryTree<E> {
         return root==null;
     }
     
+    public void calcularArbol (HashMap<String,Integer> mapa){
+        
+    }
+    
+    public HashMap<String,String> calcularCodigos (){
+        HashMap<String,String> mapa = new HashMap<>();
+        return mapa;
+    }
+    
+    public static String codificar (String texto, HashMap<String,String> mapa){
+        if (texto== null ||  mapa == null)
+            return "";
+        return "";
+    }
+    
+    public static String decodificar (String texto, HashMap<String,String> mapa){
+        if (texto== null ||  mapa == null)
+            return "";
+        return "";
+    }
     /**
      * Agregamos un nodo en la hoja hija vacia Left o Right
      * @param child Elemento hija
@@ -44,9 +65,9 @@ public class BinaryTree<E> {
         return true;
     }
     
-    public BinaryTree<E> mirror() {
+    public ArbolHuffman<E> mirror() {
         if(size()==1) return this;        
-        BinaryTree<E> tree = new BinaryTree<>();
+        ArbolHuffman<E> tree = new ArbolHuffman<>();
         tree.root = mirror(this.root);        
         return tree;
     }
@@ -68,10 +89,10 @@ public class BinaryTree<E> {
 
     @Override
     public boolean equals(Object obj) {   
-        if (!(obj instanceof BinaryTree)  || getClass() != obj.getClass()) 
+        if (!(obj instanceof ArbolHuffman)  || getClass() != obj.getClass()) 
             return false;   
         else if(obj == this) return true;   
-        BinaryTree<E> other = (BinaryTree<E>) obj;
+        ArbolHuffman<E> other = (ArbolHuffman<E>) obj;
         if(this.size()!=other.size()) return false;        
         return equals(this.root, other.root);
     }
@@ -79,18 +100,18 @@ public class BinaryTree<E> {
     private boolean equals(NodeBT<E>p, NodeBT<E> p2){
         if(p==null && p2==null) return true;
         else if(p==null || p2==null) return false;
-        else if(!p.getData().equals(p2.getData())) return false;
+        else if(!p.getFrecuencia().equals(p2.getFrecuencia())) return false;
         return equals(p.getLeft(),p2.getLeft()) && equals(p.getRight(), p2.getRight());    
     }
     
     public boolean remove(E child){
         if(isEmpty() || child==null) return false;
-        if(root.getData().equals(child)) root=null; //En caso que el dato agregado sea igual al root (Padre), borramos el arbol
+        if(root.getFrecuencia().equals(child)) root=null; //En caso que el dato agregado sea igual al root (Padre), borramos el arbol
         
         NodeBT<E> parent= searchParent(child); //Obtenemos el padre del hijo mencionado como parametro
         if(parent == null) return false; //Si no lo encuentra, retorna false
         
-        if(parent.getLeft()!= null && parent.getLeft().getData().equals(child)) 
+        if(parent.getLeft()!= null && parent.getLeft().getFrecuencia().equals(child)) 
             parent.setLeft(null); //Seteamos el hijo Izq a null del padre
         else
             parent.setRight(null); //Seteamos el hijo Der. a null del padre
@@ -108,8 +129,8 @@ public class BinaryTree<E> {
     
     private NodeBT<E> searchParent(E child, NodeBT<E> node){
         if(node==null) return null;
-        if(node.getLeft()!=null && node.getLeft().getData().equals(child)) return node;
-        else if(node.getRight()!=null && node.getRight().getData().equals(child)) return node;
+        if(node.getLeft()!=null && node.getLeft().getFrecuencia().equals(child)) return node;
+        else if(node.getRight()!=null && node.getRight().getFrecuencia().equals(child)) return node;
         NodeBT<E> n=searchParent(child, node.getLeft());
         return (n!=null) ? n: searchParent(child, node.getRight());
     }
@@ -126,7 +147,7 @@ public class BinaryTree<E> {
     
     private NodeBT<E> searchNode(E data, NodeBT<E> p){
         if(p==null) return null;
-        else if(p.getData().equals(data)) return p;
+        else if(p.getFrecuencia().equals(data)) return p;
         NodeBT<E> l= searchNode(data,p.getLeft());
         return(l!=null)? l: searchNode(data,p.getRight());
     }
@@ -187,7 +208,7 @@ public class BinaryTree<E> {
     
     private boolean contains(E data, NodeBT<E> p){
         if(p==null) return false;
-        else if(data.equals( p.getData()))
+        else if(data.equals( p.getFrecuencia()))
             return true;
         return contains(data, p.getLeft()) || contains(data,p.getRight());
     }
@@ -230,7 +251,7 @@ public class BinaryTree<E> {
     
     private void preOrden(NodeBT<E> nodo){
         if(nodo!=null){
-            System.out.print(nodo.getData());
+            System.out.print(nodo.getFrecuencia());
             preOrden(nodo.getLeft());
             preOrden(nodo.getRight());
         }
@@ -248,7 +269,7 @@ public class BinaryTree<E> {
         if(nodo!=null){
             pos_orden(nodo.getLeft());
             pos_orden(nodo.getRight());
-            System.out.print(nodo.getData());
+            System.out.print(nodo.getFrecuencia());
         }
     }
     
@@ -262,7 +283,7 @@ public class BinaryTree<E> {
     private void en_orden(NodeBT<E> nodo){
         if(nodo!=null){
             en_orden(nodo.getLeft());
-            System.out.print(nodo.getData());
+            System.out.print(nodo.getFrecuencia());
             en_orden(nodo.getRight());
         }
     }

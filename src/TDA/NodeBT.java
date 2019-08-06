@@ -10,21 +10,21 @@ package TDA;
  * @author Rogencio
  */
 public class NodeBT<E> {
-    private E data;
+    private E frecuencia;
     private NodeBT<E> left;
     private NodeBT<E> right;
     
     public NodeBT(E data){
-        this.data=data;
+        this.frecuencia=data;
         left=right=null;
     }
 
-    public E getData() {
-        return data;
+    public E getFrecuencia() {
+        return frecuencia;
     }
 
-    public void setData(E data) {
-        this.data = data;
+    public void setFrecuencia(E frecuencia) {
+        this.frecuencia = frecuencia;
     }
 
     public NodeBT<E> getLeft() {

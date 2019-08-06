@@ -39,6 +39,11 @@ public class Util {
         return mensaje;
     }
     
+    /**
+     * Calcular la frecuencia de cada uno de los caracteres del texto
+     * @param texto Recibe el texto que se leyó desde el archivo
+     * @return Un mapa con la información de la frecuencia de cada uno de los caracteres que contiene el texto
+     */
     public static HashMap<String,Integer> calcularFrecuencias(String texto){
         HashMap<String,Integer> caracteres= new HashMap<>();
         if(texto!=null){
@@ -163,14 +168,14 @@ public class Util {
      * @param texto String del texto a guardar
      * @param mapa Mapa con las frecuencias del txt leido
      */
-    public static void guardarTexto (String nombreArchivo, String texto, HashMap<String,Integer> mapa){
+    public static void guardarTexto (String nombreArchivo, String texto, HashMap<String,String> mapa){
         if(nombreArchivo!=null && texto!=null && mapa!=null){
             try(BufferedWriter out = new BufferedWriter(new FileWriter("src/Recursos/"+nombreArchivo+".txt"));
             BufferedWriter out2 = new BufferedWriter(new FileWriter("src/Recursos/"+nombreArchivo+"_compress.txt"));){
             out.write(texto);
             out.newLine();
             out.close();
-            for (Map.Entry<String,Integer> entry : mapa.entrySet()) {
+            for (Map.Entry<String,String> entry : mapa.entrySet()) {
                 out2.write(entry.getKey()+","+entry.getValue()+"\n");            
             }
             out2.close();

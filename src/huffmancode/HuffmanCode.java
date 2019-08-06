@@ -7,6 +7,7 @@ package huffmancode;
 
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -23,7 +24,7 @@ public class HuffmanCode extends Application {
     public void start(Stage primaryStage) {
         HuffmanPane stv= new HuffmanPane();        
         
-        scene = new Scene(new Group(), 850, 650);
+        scene = new Scene(new Group(), 600, 200);
         scene.setRoot(stv.getRoot());
         
         Image image= new Image("/Recursos/algorithm.png");
@@ -31,6 +32,7 @@ public class HuffmanCode extends Application {
         
         primaryStage.setTitle("HuffmanCoding");
         primaryStage.setScene(scene);
+        primaryStage.setOnCloseRequest(e -> Platform.exit());
         primaryStage.show();
     }
 
