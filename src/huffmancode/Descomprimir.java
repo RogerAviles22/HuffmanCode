@@ -10,12 +10,12 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -24,13 +24,9 @@ import javafx.stage.Stage;
  *
  * @author Rogencio
  */
-public class Descomprimir {
-    private BorderPane root;
-    private Button salir;
-    private Label titulo;
-    private Stage stageForm;
-    private final FileChooser fileChooser = new FileChooser();
-    private final Button openButton = new Button("Open a file txt...");
+public class Descomprimir extends Compresion{    
+    private Button btn_compress;
+    private TextField txt_compress;
     
     public Descomprimir() {
         root= new BorderPane();
@@ -40,24 +36,71 @@ public class Descomprimir {
         contenido();
         cerrarVentana();
     }
+    
     private void contenido(){
-        VBox vb= new VBox();
-        titulo= new Label("Selecciona archivo a Descomprimir ");
+        //VBox vb= new VBox();
+        GridPane gp = new GridPane();
         
+        inicializar();
+        
+        gp.add(openButton, 0, 0);
+        gp.add(txt_file, 0, 1);
+        gp.add(btn_compress, 0, 2);
+        gp.add(txt_compress, 0, 3);
+        gp.add(accion, 0, 4);
+        gp.add(salir, 0, 5);
+        gp.setHgap(10);
+        gp.setVgap(10);
         openButton.setOnAction(e -> {
-            File selectedFile = fileChooser.showOpenDialog(stageForm);
+            File selectedFile = fileChooser.showOpenDialog(null);
+            select_File(selectedFile, txt_file);
         });
+        btn_compress.setOnAction(e -> {
+            File selectedFile = fileChooser.showOpenDialog(null);
+            select_File(selectedFile, txt_compress);
+        });
+        configureFileChooser(fileChooser);
         
-        salir= new Button("Salir");
-        vb.setAlignment(Pos.CENTER);
-        vb.setSpacing(10);
-        vb.getChildren().addAll(titulo,openButton,salir);
-        root.setCenter(vb);
+        gp.setPadding(new Insets(10, 10, 10, 10));
+        gp.setAlignment(Pos.CENTER);
+        root.setCenter(gp);
     }
     
+    /**
+     * Inicializa los botones y elementos.
+     */
+    private void inicializar(){
+        openButton = new Button("Selecciona el archivo a descomprimir: ");
+        btn_compress = new Button("Selecciona el archivo compress: ");
+        fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        salir= new Button("Salir");
+        txt_file = new TextField();
+        txt_file.setEditable(false);        
+        txt_compress= new TextField();
+        txt_compress.setEditable(false);
+        accion = new Button("Descomprimir");
+    }
+    
+    /**
+     * Restriccion de sólo abrir archivos .txt
+     * @param fileChooser Elemento FileChooser
+     */
+    private void configureFileChooser(final FileChooser fileChooser) {                       
+            fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("TXT Files", "*.txt")
+            );
+    }
+    
+    private void select_File(File selectedFile, TextField txt_file){
+           if(selectedFile!=null)
+               txt_file.setText(selectedFile.getAbsolutePath());
+       }
+    
+    @Override
     public void mostrarVentana(){
         stageForm = new Stage();
-        Scene scene = new Scene(getRoot(), 250, 150);
+        Scene scene = new Scene(getRoot(), 450, 250);
         stageForm.setTitle("Descomprimir");
         stageForm.setScene(scene);
         stageForm.show();       
@@ -68,8 +111,5 @@ public class Descomprimir {
             stageForm.close();
         });
     }
-
-    public BorderPane getRoot() {
-        return root;
-    }
+    
 }

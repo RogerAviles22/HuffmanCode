@@ -6,6 +6,9 @@
 package TDA;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 
 /**
@@ -32,16 +35,47 @@ public class ArbolHuffman<E> {
         return mapa;
     }
     
-    public static String codificar (String texto, HashMap<String,String> mapa){
-        if (texto== null ||  mapa == null)
+    /**
+     * Recibe el texto que se leyó desde el archivo y el mapa que contiene los códigos respectivos para cada carácter
+     * @param leerTexto Texto leido del Archivo
+     * @param mapa Con los codigos de cada caracter.
+     * @return la conformación del código de Huffman
+     */
+    public static String codificar (String leerTexto, HashMap<String,String> mapa){
+        if (leerTexto== null ||  mapa == null)
             return "";
-        return "";
+        String binario ="";
+        for(int i=0; i<leerTexto.length(); i++){
+            char b= leerTexto.charAt(i);
+            binario+=mapa.get(String.valueOf(b));            
+        }
+        return binario;
     }
     
-    public static String decodificar (String texto, HashMap<String,String> mapa){
-        if (texto== null ||  mapa == null)
-            return "";
-        return "";
+    /**
+     * Recibe el código de huffman y el mapa que contiene los códigos respectivos para cada carácter.
+     * @param binario Código de huffman
+     * @param mapa contiene los códigos respectivos para cada carácter
+     * @return El texto original.
+     */
+    public static String decodificar (String binario, HashMap<String,String> mapa){
+        if (binario== null ||  mapa == null)
+            return ""; //if(mapa.get(bitCode)!=null){
+        String bitCode ="";
+        String txt_original ="";
+        
+        for(int i=0; i<binario.length(); i++){
+            bitCode+=binario.charAt(i);
+            if(mapa.containsValue(bitCode)){
+                for (Map.Entry<String, String> entry : mapa.entrySet()) {
+                    if(entry.getValue().equals(bitCode)){
+                        txt_original+=entry.getKey();
+                        bitCode="";
+                    }
+                }
+            }      
+        }
+        return txt_original;
     }
     /**
      * Agregamos un nodo en la hoja hija vacia Left o Right

@@ -28,7 +28,7 @@ public class Util {
      */
     public static String leerTexto(String nombreArchivo){
         String mensaje="";
-        try(Scanner sc = new Scanner(new File("src/Recursos/"+nombreArchivo))){            
+        try(Scanner sc = new Scanner(new File(/*"src/Recursos/"+*/nombreArchivo))){            
             while(sc.hasNextLine()){
             String m= sc.nextLine();
             mensaje+=m;            
@@ -192,7 +192,7 @@ public class Util {
      */
     public static HashMap<String,String> leerMapa (String nombreArchivo){
         HashMap<String,String> mapaLeido=new HashMap<>();
-        try(Scanner sc = new Scanner(new File("src/Recursos/"+nombreArchivo))){            
+        try(Scanner sc = new Scanner(new File(/*"src/Recursos/"+*/nombreArchivo))){            
             while(sc.hasNextLine()){
                 String[] m = sc.nextLine().split(",");
                 mapaLeido.put(m[0], m[1]);
