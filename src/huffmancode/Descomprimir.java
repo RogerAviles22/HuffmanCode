@@ -6,6 +6,7 @@
 package huffmancode;
 
 import java.io.File;
+import java.util.HashMap;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -19,6 +20,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import proyecto.HuffmanBT;
 
 /**
  *
@@ -27,6 +29,7 @@ import javafx.stage.Stage;
 public class Descomprimir extends Compresion{    
     private Button btn_compress;
     private TextField txt_compress;
+    MensajeControlador mnsjContrl= new MensajeControlador();
     
     public Descomprimir() {
         root= new BorderPane();
@@ -80,6 +83,7 @@ public class Descomprimir extends Compresion{
         txt_compress= new TextField();
         txt_compress.setEditable(false);
         accion = new Button("Descomprimir");
+        accionButton(txt_file, txt_compress);
     }
     
     /**
@@ -96,6 +100,21 @@ public class Descomprimir extends Compresion{
            if(selectedFile!=null)
                txt_file.setText(selectedFile.getAbsolutePath());
        }
+    private void accionButton(TextField txt_file, TextField txt_file2){
+        accion.setOnAction(e->{
+            if(txt_file.getText().equals("") || txt_file2.getText().equals(""))
+                mnsjContrl.mensajeTextFieldVacio();
+            else
+                mnsjContrl.mensajeCompresionCorrecto("Descomprimir Realizado");
+        });
+    }
+    
+    private void generarHuffmanDescomprimir(TextField txt_field, TextField txt_compress){
+        HuffmanBT huffmanComprimir = new HuffmanBT();
+        huffmanComprimir.calcularArbol(txt_field.getText());
+        HashMap<String,String> calculo = huffmanComprimir.calcularCodigos();
+        
+    }
     
     @Override
     public void mostrarVentana(){

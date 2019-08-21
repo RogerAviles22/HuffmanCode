@@ -6,14 +6,12 @@
 package proyecto;
 
 import java.io.File;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Scanner;
-import java.util.Stack;
 
 /**
  *
@@ -36,7 +34,7 @@ public class HuffmanBT {
         return root==null;
     }
     
-    public String codificar(String texto){
+    public void calcularArbol(String texto){
         Scanner sc=null;
         try{
             sc= new Scanner(new File(texto));
@@ -54,7 +52,7 @@ public class HuffmanBT {
         crearTablaFrecuencias();
         añadirNodos();
         
-        return codificar(root);
+        //return codificar(root);
     }
     
     private String codificar(Nodo<String> nodo){
@@ -90,6 +88,33 @@ public class HuffmanBT {
         }
     }
     
+    public HashMap<String,String> calcularCodigos (){
+        HashMap<String,String> mapCodeBinario= new HashMap<>();
+        if(isEmpty()) return mapCodeBinario;
+        
+        return mapCodeBinario;
+    }
+    
+    /*public HashMap<String,String> calcularCodigos(String Hexadecimal){
+        HashMap<String,String> mapcodificado= new HashMap<>();
+        String[] cadenas=Hexadecimal.split("");
+        for (String cadena : cadenas) {
+             mapcodificado.put(cadena, calcularCodigos(cadena, root));
+        }
+        return  mapcodificado;
+    }
+    
+    private String calcularCodigos(String letra, Nodo<String> p){
+        String codigo="";
+        if(p==null) return "";
+        if(p.getLeft()==null && p.getRight()==null && !p.getInfo().getCadena().equals(letra)) return "";
+        if(p.getInfo().getCadena().contains(letra)&& p!=root){
+           codigo+= Integer.toString(p.getInfo().getBit());
+        }
+        codigo+=calcularCodigos(letra,p.getLeft()) + calcularCodigos(letra,p.getRight());
+        return codigo;
+}*/
+    
     public void enOrden(){
         enOrden(root);
     }
@@ -101,4 +126,57 @@ public class HuffmanBT {
             enOrden(q.getRight());
         }
     }
+    
+    /**
+     * Recibe el texto que se leyó desde el archivo y el mapa que contiene los códigos respectivos para cada carácter
+     * @param leerTexto Texto leido del Archivo
+     * @param mapa Con los codigos de cada caracter.
+     * @return la conformación del código de Huffman
+     */
+    public static String codificar (String leerTexto, HashMap<String,String> mapa){
+        if (leerTexto== null ||  mapa == null)
+            return "";
+        String binario ="";
+        for(int i=0; i<leerTexto.length(); i++){
+            char b= leerTexto.charAt(i);
+            binario+=mapa.get(String.valueOf(b));            
+        }
+        return binario;
+    }
+    
+    /**
+     * Recibe el código de huffman y el mapa que contiene los códigos respectivos para cada carácter.
+     * @param binario Código de huffman
+     * @param mapa contiene los códigos respectivos para cada carácter
+     * @return El texto original.
+     */
+    public static String decodificar (String binario, HashMap<String,String> mapa){
+        if (binario== null ||  mapa == null)
+            return ""; //if(mapa.get(bitCode)!=null){
+        String bitCode ="";
+        String txt_original ="";
+        
+        for(int i=0; i<binario.length(); i++){
+            bitCode+=binario.charAt(i);
+            if(mapa.containsValue(bitCode)){
+                for (Map.Entry<String, String> entry : mapa.entrySet()) {
+                    if(entry.getValue().equals(bitCode)){
+                        txt_original+=entry.getKey();
+                        bitCode="";
+                    }
+                }
+            }      
+        }
+        return txt_original;
+    }
+
+    public PriorityQueue<Nodo<String>> getAlmacen() {
+        return almacen;
+    }
+
+    public HashMap<Character, Integer> getTablaFrecuencias() {
+        return tablaFrecuencias;
+    }
+    
+    
 }

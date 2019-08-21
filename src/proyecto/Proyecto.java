@@ -5,7 +5,11 @@
  */
 package proyecto;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.PriorityQueue;
+import java.util.Set;
 
 /**
  *
@@ -18,9 +22,14 @@ public class Proyecto {
      */
     public static void main(String[] args) {
         HuffmanBT t=new HuffmanBT();
-        t.codificar("PruebaHuffman.txt");
+        t.calcularArbol("src/Recursos/FATALITY.txt");
         t.enOrden();
-        System.out.println(" ");
+        HashMap<Character,Integer> a = t.getTablaFrecuencias();
+        Set<Map.Entry<Character, Integer>> set = a.entrySet(); 
+        for(Map.Entry<Character,Integer> me : set){
+            System.out.println(me.getKey()+" "+me.getValue());
+        }
+        //System.out.println(" ");
     }
     
 }
