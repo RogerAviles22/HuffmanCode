@@ -7,10 +7,6 @@ package proyecto;
 
 import TDA.Util;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.PriorityQueue;
-import java.util.Set;
 
 /**
  *
@@ -51,6 +47,10 @@ public class Proyecto {
         String sc = String.valueOf(c);
         System.out.println(sc.equals(s));*/
         //System.out.println(" ");
+        
+        /*String r = "src/Recursos/fatality.txt";
+        String compress = r .substring(0,r.length()-4)+"_compress.txt";
+        System.out.println(compress);*/
     }
     
 }

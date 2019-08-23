@@ -29,6 +29,7 @@ import proyecto.HuffmanBT;
  */
 public class Comprimir extends Compresion{
     MensajeControlador mnsjContrl= new MensajeControlador();
+    public static String decodificado= "";
     
     public Comprimir() {
         root= new BorderPane();
@@ -96,7 +97,7 @@ public class Comprimir extends Compresion{
             if(txt_file.getText().equals(""))
                 mnsjContrl.mensajeTextFieldVacio();
             else{
-                //generarHuffmanComprimir(txt_file);
+                generarHuffmanComprimir(txt_file);
                 mnsjContrl.mensajeCompresionCorrecto("Comprimir Realizado");
             }
                 
@@ -104,23 +105,21 @@ public class Comprimir extends Compresion{
     }
     
     /**
-     * FALTA IMPLEMENTAR BIEN
+     * Guarda el txt comprimido y el mapa_compress
      * @param txt_field 
      */
     private void generarHuffmanComprimir(TextField txt_field){
         HuffmanBT huffmanComprimir = new HuffmanBT();
+        String File = txt_field.getText();
         String leerText= Util.leerTexto(txt_field.getText());
         huffmanComprimir.calcularArbol(txt_field.getText());
         HashMap<String,String> calcularCodigo = huffmanComprimir.calcularCodigos();
         String codificado = HuffmanBT.codificar(leerText, calcularCodigo);
         String binHexa = Util.binarioHexaDecimal(codificado);
-        
-        
-        //HashMap<String,String> calculo = huffmanComprimir.calcularCodigos();
-        
-        /*String binario= HuffmanBT.codificar(txt_field.getText(), calculo);
-        Util.guardarTexto(txt_field.getText(), "", calculo);*/
-        
+        System.out.println(leerText);
+        System.out.println(binHexa);
+        Util.guardarTexto(File, binHexa, calcularCodigo);
+        decodificado = HuffmanBT.decodificar(codificado, calcularCodigo);
     }
     
     @Override

@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.HashMap;
 import java.util.Map;
+import proyecto.HuffmanBT;
 /**
  *
  * @author Rogencio
@@ -28,7 +29,7 @@ public class Util {
      */
     public static String leerTexto(String nombreArchivo){
         String mensaje="";
-        try(Scanner sc = new Scanner(new File(/*"src/Recursos/"+*/nombreArchivo))){            
+        try(Scanner sc = new Scanner(new File(nombreArchivo))){            
             while(sc.hasNextLine()){
             String m= sc.nextLine();
             mensaje+=m;            
@@ -170,15 +171,28 @@ public class Util {
      */
     public static void guardarTexto (String nombreArchivo, String texto, HashMap<String,String> mapa){
         if(nombreArchivo!=null && texto!=null && mapa!=null){
-            try(BufferedWriter out = new BufferedWriter(new FileWriter("src/Recursos/"+nombreArchivo+".txt"));
-            BufferedWriter out2 = new BufferedWriter(new FileWriter("src/Recursos/"+nombreArchivo+"_compress.txt"));){
-            out.write(texto);
-            out.newLine();
-            out.close();
-            for (Map.Entry<String,String> entry : mapa.entrySet()) {
-                out2.write(entry.getKey()+","+entry.getValue()+"\n");            
+            String compress = nombreArchivo .substring(0,nombreArchivo.length()-4)+"_compress.txt";
+            System.out.println(compress);
+            try(BufferedWriter out = new BufferedWriter(new FileWriter(nombreArchivo));
+            BufferedWriter out2 = new BufferedWriter(new FileWriter(compress));){
+                out.write(texto);
+                out.newLine();
+                out.close();
+                for (Map.Entry<String,String> entry : mapa.entrySet()) 
+                    out2.write(entry.getKey()+","+entry.getValue()+"\n");
+                out2.close();
+            }catch(IOException e){
+                System.err.println("Error"+e);
             }
-            out2.close();
+        }      
+    }
+    
+    public static void guardarDecodificado(String nombreArchivo, String texto){
+        if(nombreArchivo!=null && texto!=null){
+            try(BufferedWriter out = new BufferedWriter(new FileWriter(nombreArchivo));){
+                out.write(texto);
+                out.newLine();
+                out.close();
             }catch(IOException e){
                 System.err.println("Error"+e);
             }
@@ -192,7 +206,7 @@ public class Util {
      */
     public static HashMap<String,String> leerMapa (String nombreArchivo){
         HashMap<String,String> mapaLeido=new HashMap<>();
-        try(Scanner sc = new Scanner(new File(/*"src/Recursos/"+*/nombreArchivo))){            
+        try(Scanner sc = new Scanner(new File(nombreArchivo))){            
             while(sc.hasNextLine()){
                 String[] m = sc.nextLine().split(",");
                 mapaLeido.put(m[0], m[1]);
@@ -203,11 +217,22 @@ public class Util {
         return mapaLeido;
     }
     
-    //public static void main(String[] args) {
-        /*String m = leerTexto("hola.txt");  
-        System.out.println("Texto antes de calcular Frecuencia Y convertirlo a decimal: "+m);
-        guardarTexto("hola", hexadecimalBinario(m), calcularFrecuencias(m));
-        System.out.println(leerMapa("hola_compress.txt"));*/
+    public static void main(String[] args) {
+        HuffmanBT huffmanComprimir = new HuffmanBT();
+        String file = "E:\\Respaldo2\\ESPOL\\7mo Semestre\\Estructuras\\HuffmanCode\\src\\Recursos\\hola.txt";
+        System.out.println(file);
+        String leerText= Util.leerTexto(file);
+        System.out.println("Texto antes de calcular Frecuencia Y convertirlo a decimal: "+leerText);
+        
+        huffmanComprimir.calcularArbol("src/Recursos/hola.txt");
+        HashMap<String,String> calcularCodigo = huffmanComprimir.calcularCodigos();
+        String codificado = HuffmanBT.codificar(leerText, calcularCodigo);
+        String binHexa = Util.binarioHexaDecimal(codificado);
+        System.out.println(binHexa);
+        Util.guardarTexto(file, binHexa, calcularCodigo); 
+        System.out.println(calcularCodigo);
+        
+        //System.out.println(leerMapa("hola_compress.txt"));
         //System.out.println(binarioHexaDecimal("0010010010010010011101101101101101101101100000000000000001011011011011011011011001001001001001001111111111111111111111110101010101010101010101"));
         //System.out.println(contadorCaracteres("24--", '-'));
         //System.out.println(hexadecimalBinario("9"));
@@ -218,6 +243,6 @@ public class Util {
         Formatter fmt = new Formatter();
         fmt.format("%04d",numero);
         System.out.println("El numero formateado " + fmt);*/
-    //}
+    }
     
 }

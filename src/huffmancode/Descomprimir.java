@@ -5,6 +5,7 @@
  */
 package huffmancode;
 
+import TDA.Util;
 import java.io.File;
 import java.util.HashMap;
 import javafx.geometry.Insets;
@@ -41,7 +42,6 @@ public class Descomprimir extends Compresion{
     }
     
     private void contenido(){
-        //VBox vb= new VBox();
         GridPane gp = new GridPane();
         
         inicializar();
@@ -104,15 +104,21 @@ public class Descomprimir extends Compresion{
         accion.setOnAction(e->{
             if(txt_file.getText().equals("") || txt_file2.getText().equals(""))
                 mnsjContrl.mensajeTextFieldVacio();
-            else
+            else{
+                generarHuffmanDescomprimir(txt_file, txt_compress);
                 mnsjContrl.mensajeCompresionCorrecto("Descomprimir Realizado");
+            }
+                
         });
     }
     
     private void generarHuffmanDescomprimir(TextField txt_field, TextField txt_compress){
-        HuffmanBT huffmanComprimir = new HuffmanBT();
-        huffmanComprimir.calcularArbol(txt_field.getText());
-        //HashMap<String,String> calculo = huffmanComprimir.calcularCodigos();
+        String file = txt_field.getText();
+        String leerHexaText= Util.leerTexto(file);
+        HashMap<String,String> leerMapa = Util.leerMapa(txt_compress.getText());        
+        String decodificado = HuffmanBT.decodificar(leerHexaText, leerMapa);
+        System.out.println(decodificado);
+        Util.guardarDecodificado(file, Comprimir.decodificado);
         
     }
     
