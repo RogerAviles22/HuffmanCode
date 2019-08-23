@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Scanner;
+import java.util.Set;
 
 /**
  *
@@ -82,7 +83,9 @@ public class HuffmanBT {
             Nodo<String> n2=almacen.poll();
             Nodo<String> nRoot=new Nodo<>(n.getData()+n2.getData(),n.getFrecuencia()+n2.getFrecuencia());
             nRoot.setLeft(n2);
+            n2.setBit(0);
             nRoot.setRight(n);
+            n.setBit(1);
             root=nRoot;
             if(!almacen.isEmpty())almacen.offer(root); 
         }
@@ -90,7 +93,12 @@ public class HuffmanBT {
     
     public HashMap<String,String> calcularCodigos (){
         HashMap<String,String> mapCodeBinario= new HashMap<>();
-        if(isEmpty()) return mapCodeBinario;
+        Set<Map.Entry<Character, Integer>> set = tablaFrecuencias.entrySet(); 
+        if(this.isEmpty()) return mapCodeBinario;
+        for (Map.Entry<Character,Integer> me : set) {
+            String s =String.valueOf(me.getKey());                    
+             mapCodeBinario.put(s, calcularCodigos(s, root));
+        }
         
         return mapCodeBinario;
     }
@@ -102,18 +110,18 @@ public class HuffmanBT {
              mapcodificado.put(cadena, calcularCodigos(cadena, root));
         }
         return  mapcodificado;
-    }
+    }*/
     
     private String calcularCodigos(String letra, Nodo<String> p){
         String codigo="";
         if(p==null) return "";
-        if(p.getLeft()==null && p.getRight()==null && !p.getInfo().getCadena().equals(letra)) return "";
-        if(p.getInfo().getCadena().contains(letra)&& p!=root){
-           codigo+= Integer.toString(p.getInfo().getBit());
+        if(p.getLeft()==null && p.getRight()==null && !p.getData().equals(letra)) return "";
+        if( p.getData().contains(letra)&& p!=root){
+           codigo+= Integer.toString(p.getBit());
         }
         codigo+=calcularCodigos(letra,p.getLeft()) + calcularCodigos(letra,p.getRight());
         return codigo;
-}*/
+    }
     
     public void enOrden(){
         enOrden(root);
@@ -122,7 +130,7 @@ public class HuffmanBT {
     private void enOrden(Nodo<String> q) {
         if(q!=null){
             enOrden(q.getLeft());
-            System.out.print(q.getData()+":"+q.getFrecuencia()+" ");
+            System.out.print(q.getData()+":"+q.getFrecuencia()+" BIT:"+q.getBit()+" - ");
             enOrden(q.getRight());
         }
     }

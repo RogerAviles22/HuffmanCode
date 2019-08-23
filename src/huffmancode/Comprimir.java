@@ -109,11 +109,17 @@ public class Comprimir extends Compresion{
      */
     private void generarHuffmanComprimir(TextField txt_field){
         HuffmanBT huffmanComprimir = new HuffmanBT();
+        String leerText= Util.leerTexto(txt_field.getText());
         huffmanComprimir.calcularArbol(txt_field.getText());
-        HashMap<String,String> calculo = huffmanComprimir.calcularCodigos();
+        HashMap<String,String> calcularCodigo = huffmanComprimir.calcularCodigos();
+        String codificado = HuffmanBT.codificar(leerText, calcularCodigo);
+        String binHexa = Util.binarioHexaDecimal(codificado);
         
-        String binario= HuffmanBT.codificar(txt_field.getText(), calculo);
-        Util.guardarTexto(txt_field.getText(), "", calculo);
+        
+        //HashMap<String,String> calculo = huffmanComprimir.calcularCodigos();
+        
+        /*String binario= HuffmanBT.codificar(txt_field.getText(), calculo);
+        Util.guardarTexto(txt_field.getText(), "", calculo);*/
         
     }
     

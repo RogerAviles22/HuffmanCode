@@ -112,7 +112,7 @@ public class Descomprimir extends Compresion{
     private void generarHuffmanDescomprimir(TextField txt_field, TextField txt_compress){
         HuffmanBT huffmanComprimir = new HuffmanBT();
         huffmanComprimir.calcularArbol(txt_field.getText());
-        HashMap<String,String> calculo = huffmanComprimir.calcularCodigos();
+        //HashMap<String,String> calculo = huffmanComprimir.calcularCodigos();
         
     }
     

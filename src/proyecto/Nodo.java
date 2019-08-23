@@ -5,9 +5,6 @@
  */
 package proyecto;
 
-import java.util.HashMap;
-import java.util.Stack;
-
 /**
  *
  * @author RIVADENEIRA
@@ -16,11 +13,13 @@ public class Nodo<E> {
     private E data;
     private Nodo left,right;
     private int frecuencia;
- 
+    private int bit;
+    
     public Nodo(E data,Integer frecuencia){
         this.data=data;
         left=right=null;
         this.frecuencia=frecuencia;
+        this.bit=0;
     }
 
     public E getData() {
@@ -55,6 +54,15 @@ public class Nodo<E> {
         this.frecuencia = frecuencia;
     }
 
+    public int getBit() {
+        return bit;
+    }
+
+    public void setBit(int bit) {
+        this.bit = bit;
+    }
+
+    
     @Override
     public String toString() {
         return ""+data+":"+frecuencia;
