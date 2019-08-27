@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package huffmancode;
+package Vista;
 
 import TDA.Util;
 import java.io.File;
@@ -21,15 +21,14 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import proyecto.HuffmanBT;
+import Modelo.HuffmanBT;
 
 /**
  *
  * @author Rogencio
  */
 public class Comprimir extends Compresion{
-    MensajeControlador mnsjContrl= new MensajeControlador();
-    public static String decodificado= "";
+    MensajeControlador mnsjContrl= new MensajeControlador();    
     
     public Comprimir() {
         root= new BorderPane();
@@ -99,6 +98,7 @@ public class Comprimir extends Compresion{
             else{
                 generarHuffmanComprimir(txt_file);
                 mnsjContrl.mensajeCompresionCorrecto("Comprimir Realizado");
+                txt_file.setText("");
             }
                 
         });
@@ -119,7 +119,6 @@ public class Comprimir extends Compresion{
         System.out.println(leerText);
         System.out.println(binHexa);
         Util.guardarTexto(File, binHexa, calcularCodigo);
-        decodificado = HuffmanBT.decodificar(codificado, calcularCodigo);
     }
     
     @Override

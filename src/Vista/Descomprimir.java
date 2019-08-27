@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package huffmancode;
+package Vista;
 
 import TDA.Util;
 import java.io.File;
@@ -21,7 +21,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import proyecto.HuffmanBT;
+import Modelo.HuffmanBT;
 
 /**
  *
@@ -107,6 +107,8 @@ public class Descomprimir extends Compresion{
             else{
                 generarHuffmanDescomprimir(txt_file, txt_compress);
                 mnsjContrl.mensajeCompresionCorrecto("Descomprimir Realizado");
+                txt_file.setText("");
+                txt_compress.setText("");
             }
                 
         });
@@ -115,10 +117,11 @@ public class Descomprimir extends Compresion{
     private void generarHuffmanDescomprimir(TextField txt_field, TextField txt_compress){
         String file = txt_field.getText();
         String leerHexaText= Util.leerTexto(file);
+        String hexaBinario= Util.hexadecimalBinario(leerHexaText);
         HashMap<String,String> leerMapa = Util.leerMapa(txt_compress.getText());        
-        String decodificado = HuffmanBT.decodificar(leerHexaText, leerMapa);
-        System.out.println(decodificado);
-        Util.guardarDecodificado(file, Comprimir.decodificado);
+        String decodificado = HuffmanBT.decodificar(hexaBinario, leerMapa);
+        System.out.println("TEXTO ORIGINAL"+decodificado);
+        Util.guardarDecodificado(file, decodificado);
         
     }
     

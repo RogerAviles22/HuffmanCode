@@ -8,11 +8,11 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="HuffmanCode.jar" size="82305" download="eager" />
+    <jar href="HuffmanCode.jar" size="77344" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="HuffmanCode" >
     <param name="requiredFXVersion" value="8.0+"/>
   </applet-desc>
-  <jfx:javafx-desc  width="800" height="600" main-class="huffmancode.HuffmanCode"  name="HuffmanCode" />
+  <jfx:javafx-desc  width="800" height="600" main-class="Vista.HuffmanCode"  name="HuffmanCode" />
   <update check="always"/>
 </jnlp>
